@@ -62,7 +62,7 @@ public class ProductCategoryAdminController extends AbstractController {
 			PageResult<ProductCategory> page, ProductCategory productCategory,
 			HttpServletRequest request) {
 		JsonResponse<List<ProductCategory>> result = new JsonResponse<List<ProductCategory>>();
-		List<ProductCategory> tempList=productCategoryService.getAllChildCategoryByCategoryId(productCategory.getCategoryId());
+		List<ProductCategory> tempList=productCategoryService.getAllNormalChildCategoryByCategoryId(productCategory.getCategoryId());
 		if (tempList != null &&tempList.size()>0) {
 			result.setRes(SystemCode.SUCCESS);
 			result.setObj(tempList);

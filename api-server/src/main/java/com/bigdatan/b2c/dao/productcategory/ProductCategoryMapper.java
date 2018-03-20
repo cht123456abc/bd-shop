@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bigdatan.b2c.dao.base.IBaseDao;
 import com.bigdatan.b2c.entity.productcategory.ProductCategory;
+import org.apache.ibatis.annotations.Param;
 
 public interface ProductCategoryMapper extends IBaseDao<ProductCategory> {
 	/**
@@ -15,7 +16,7 @@ public interface ProductCategoryMapper extends IBaseDao<ProductCategory> {
 	 *            不包含的状态
 	 * @return 一级子商品种类列表
 	 */
-	public List<ProductCategory> getChildCategoryByCategoryId(int categoryId,int notState);
+	public List<ProductCategory> getChildCategoryByCategoryId(@Param("categoryId") int categoryId, @Param("notState") int notState);
 	
 	/**
 	 * 通过商品种类id，商品种类状态 查询所有一级子种类
@@ -25,7 +26,7 @@ public interface ProductCategoryMapper extends IBaseDao<ProductCategory> {
 	 * 			包含的状态
 	 * @return
 	 */
-	public List<ProductCategory> getChildCategoryByCategoryIdAndState(int categoryId,int state);
+	public List<ProductCategory> getChildCategoryByCategoryIdAndState(@Param("categoryId") int categoryId,@Param("state") int state);
 
 	/**
 	 * 获取所有有效的一级商品分类
