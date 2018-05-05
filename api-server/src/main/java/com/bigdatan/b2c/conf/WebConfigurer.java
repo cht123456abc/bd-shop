@@ -33,10 +33,11 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
+        registry.addMapping("/**")//映射地址，/** 代表所有映射
+                .allowedOrigins("*")//允许的源域
 //                .allowedOrigins("http://localhost:4865")
-//                .allowCredentials(false).maxAge(3600)
+                .allowCredentials(true)//允不允许cookie跨域
+                .maxAge(3600)//预检请求的缓存时间（秒），即在这个时间段里，对于相同的跨域请求不会再预检了
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE");
     }
 

@@ -26,7 +26,7 @@ public class SimpleCORSFilter implements Filter {
             	break;
             } 
         }  
-    } else { // 对于无来源的请求(比如在浏览器地址栏直接输入请求的)，那就只允许我们自己的机器可以吧  
+    } else { // 对于无来源的请求(比如在浏览器地址栏直接输入请求的)，那就只允许我们自己的机器可以吧
     	response.setHeader("Access-Control-Allow-Origin", "*");  
     } 
     
