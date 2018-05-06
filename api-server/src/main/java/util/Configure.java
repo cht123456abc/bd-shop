@@ -4,10 +4,12 @@ public class Configure {
 	public static final String WX_PlACE_ORDER="https://api.mch.weixin.qq.com/pay/unifiedorder";//微信统一下单接口
 	
 	public static final String NOTIFY_URL="/wxpay/notify"; //微信支付回调地址
+
+	public static final String TOKEN="chenht";
 	
-	public static final String APP_ID="";//微信公众号appid
+	public static final String APP_ID="wx2925c6e62ef95c32";//微信公众号appid
 	
-	public static final String APP_SECRET=""; //微信公众号密钥
+	public static final String APP_SECRET="b39198630916e88710e4d3f0377caf67"; //微信公众号密钥
 	
 	public static final String WX_GET_CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=123&connect_redirect=1#wechat_redirect";//微信获取codeurl
 	

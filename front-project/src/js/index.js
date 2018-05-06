@@ -18,7 +18,7 @@ define(["components", "common", "template"], function (components, common, templ
         }).done(function (msg) {
             var res = msg.res;
             if (res === 301) {
-                window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=&redirect_uri=http%3A%2F%2F%2%2FwxAuthor%2Fuser&response_type=code&scope=snsapi_userinfo&state=aaa&connect_redirect=1#wechat_redirect"
+                //window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=&redirect_uri=http%3A%2F%2F%2%2FwxAuthor%2Fuser&response_type=code&scope=snsapi_userinfo&state=aaa&connect_redirect=1#wechat_redirect"
 
             }
         });

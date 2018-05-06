@@ -1,5 +1,8 @@
 package com.bigdatan.b2c.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import util.CommondUtil;
 import util.Configure;
+import util.Encryp.Sha1Util;
 import util.SessionUtil;
 import util.StringFormat;
 import util.http.HttpsUtil;
@@ -35,9 +39,46 @@ import com.bigdatan.b2c.service.user.IUserService;
 @RequestMapping("/wxAuthor")
 public class WxAuthor {
 	private static Logger log =LoggerFactory.getLogger(WxAuthor.class);
-	
+
 	@Resource
 	private IUserService userService;
+
+
+	/**
+	 * 微信接入服务器验证
+	 * @param request
+	 * @param response
+	 * @param signature
+	 * @param timestamp
+	 * @param nonce
+	 * @param echostr
+	 * @throws IOException
+	 */
+	@RequestMapping("/wxConfirm")
+	public void wxConfirm(HttpServletRequest request, HttpServletResponse response,
+							 @RequestParam(value="signature")String signature,
+							 @RequestParam(value="timestamp")String timestamp,
+							 @RequestParam(value="nonce")String nonce,
+							 @RequestParam(value="echostr")String echostr
+						  ) throws IOException {
+		String[] arr = new String[]{Configure.TOKEN,timestamp,nonce};
+		//排序
+		Arrays.sort(arr);
+		//生成字符串
+		StringBuffer content = new StringBuffer();
+		for(int i=0;i<arr.length;i++){
+			content.append(arr[i]);
+		}
+		//SHA1加密
+		String temp = Sha1Util.getSha1(content.toString());
+		//比对signature
+		PrintWriter out = response.getWriter();
+		if(temp.equals(signature)){
+			out.print(echostr);
+		}
+	}
+
+
 	/**
 	 * 用户授权后微信回调地址
 	 */

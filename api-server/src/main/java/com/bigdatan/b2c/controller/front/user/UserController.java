@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +20,7 @@ import com.bigdatan.b2c.service.user.IUserService;
 import util.JsonResponse;
 import util.SessionUtil;
 import constant.SystemCode;
+
 
 @Controller
 @RequestMapping("/front/user/user")
@@ -226,7 +228,7 @@ public class UserController extends AbstractController {
 	 * 更新用户信息
 	 */
 	@ResponseBody
-	@RequestMapping("/updateUser")
+		@RequestMapping("/updateUser")
 	public JsonResponse<User> updateUser(HttpServletRequest request,
 			String headimgurl, String nickname, String phone) {
 		JsonResponse<User> result = new JsonResponse<User>(SystemCode.FAILURE);

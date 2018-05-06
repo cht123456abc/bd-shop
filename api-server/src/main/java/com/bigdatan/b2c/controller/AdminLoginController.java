@@ -40,16 +40,16 @@ public class AdminLoginController {
 	@RequestMapping("/toLogin")
 	private JsonResponse<Admin> toLogin(HttpServletRequest request,Admin admin) {
 		JsonResponse<Admin> result = new JsonResponse<Admin>(SystemCode.FAILURE);
-		Admin model = adminService.login(admin);
+		Admin model = adminService.login(admin);//先判断账号存不存在
 		//首先判断用户状态是否为关闭
 		if(model.getState() == 2) {
 			return result;
 		}
 		if (model != null) {
-			// 登录成功
+			// 如果账号存在成功，看密码是否相等
 			String password = MD5Util.encoder(admin.getPassword(),model.getRand());
 			if (password.equals(model.getPassword())) {
-				
+				// 账号密码相等，则加入到Session
 				SessionUtil.setAdminUser(request, model);
 				// 登陆成功
 				result.setRes(SystemCode.SUCCESS);

@@ -8,7 +8,7 @@ import com.bigdatan.b2c.entity.admin.Admin;
 import com.bigdatan.b2c.entity.user.User;
 
 /**从request，session中获取信息*/
-public class SessionUtil {
+public class  SessionUtil {
 	/**从request中获取后端用户
 	 * @param request request
 	 * @param return user 登入后存入session的对象*/

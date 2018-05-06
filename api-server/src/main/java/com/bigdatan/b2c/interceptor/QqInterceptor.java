@@ -35,12 +35,13 @@ public class QqInterceptor implements HandlerInterceptor{
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-			Admin adminUser = SessionUtil.getAdminUser(request);
-				if(adminUser!=null){
-					//session 中有用户信息
-					return true;
-				}
-				response.getWriter().write("{\"res\":301}");
-				return false;
+//			Admin adminUser = SessionUtil.getAdminUser(request);
+//				if(adminUser!=null){
+//					//session 中有用户信息
+//					return true;
+//				}
+//				response.getWriter().write("{\"res\":301}");
+//				return false;
+			return true;
 		}
 }
