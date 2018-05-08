@@ -67,8 +67,7 @@ public class ShoppingCartController extends AbstractController {
 				shoppingCart.setCreateTime(new Date());
 				shoppingCart.setUpdateTime(new Date());
 				GoodsPrice goodsPrice = goodsPriceService
-						.findNormalGoodsPriceByPriceId(shoppingCart
-								.getPriceId());
+						.findNormalGoodsPriceByPriceId(shoppingCart.getPriceId());
 				if (goodsPrice == null) {
 					throw new Exception("当前规格" + shoppingCart.getPriceId()
 							+ "不存在！");

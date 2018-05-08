@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import constant.SystemCode;
 import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.lang3.WordUtils;
 //import org.apache.commons.lang3.math.RandomUtils;
@@ -18,11 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import util.CommondUtil;
-import util.Configure;
+import util.*;
 import util.Encryp.Sha1Util;
-import util.SessionUtil;
-import util.StringFormat;
 import util.http.HttpsUtil;
 
 import com.alibaba.fastjson.JSONObject;
@@ -45,7 +43,7 @@ public class WxAuthor {
 
 
 	/**
-	 * 微信接入服务器验证
+	 * 微信公众号消息接入服务器验证
 	 * @param request
 	 * @param response
 	 * @param signature
@@ -80,10 +78,15 @@ public class WxAuthor {
 
 
 	/**
-	 * 用户授权后微信回调地址
+	 * 拉取微信用户信息，并且登录用户，并跳转前端页面
+	 *
+	 * 用户授权后得到微信服务器返回的code
+	 * 用code来换取access_token
+	 * 再用access_token换取和oppen_id
+	 * 再用access_token和oppen_id拉取用户信息
 	 */
 	@RequestMapping("/user")
-	public void getUserInfo(@RequestParam(required=false,value="code")String code,HttpServletRequest request,HttpServletResponse response,@RequestParam(required=false,value="state")String state){
+	public JsonResponse<User> getUserInfo(@RequestParam(required=false,value="code")String code, HttpServletRequest request, HttpServletResponse response, @RequestParam(required=false,value="state")String state){
 		log.info("开始到了微信回调");
 		JSONObject jsonObject =null;//处理微信返回json数据
 		
@@ -102,13 +105,15 @@ public class WxAuthor {
 					openid=jsonObject.get("openid").toString();
 					log.info("userService.getOneByOpenid" + "...." + openid);
 					user = userService.getOneByOpenid(openid);
+					//如果用户为空
 					if(user==null){
 						log.info("user==null");
 						if(resultStr.indexOf("access_token")>0){
 							access_token=jsonObject.get("access_token").toString();
 						}
+						//拉取用户信息
 						userinfoUrl= userinfoUrl.replace("ACCESS_TOKEN", access_token).replace("OPEN_ID", openid);
-						resultStr = HttpsUtil.httpsRequest(userinfoUrl, "GET", null);//拉取用户信息
+						resultStr = HttpsUtil.httpsRequest(userinfoUrl, "GET", null);
 						if(!StringUtils.isBlank(resultStr) && resultStr.indexOf("openid")>0){//判断返回值是否含有openid
 							jsonObject = JSONObject.parseObject(resultStr);
 							//这里可以用oppenid获取数据库t_user表里的user信息判断是否已经存在该user
@@ -126,10 +131,8 @@ public class WxAuthor {
 						}
 				}
 				SessionUtil.setUser(request, user);
-				log.error("SessionUtil.setUser" + user);
 //				response.sendRedirect("*****?openid="+openid);//跳转至前端 html
-				response.sendRedirect("http://localhost:4003/");
-				log.info("开始到了微信回调");
+				//response.sendRedirect("http://localhost:4865/");
 			}else{//授权失败或者网络异常
 				log.error("授权失败,返回code为："+code+"获取openid地址:"+requesUrl);
 			}
@@ -141,5 +144,11 @@ public class WxAuthor {
 			log.error("发生异常："+e.getMessage());
 	}
 		log.info("微信回调结束");
+		JsonResponse<User> result = new JsonResponse<>();
+		result.setRes(SystemCode.SUCCESS);
+		result.setObj(user);
+		result.setResult(SystemCode.GetErrorDesc(SystemCode.SUCCESS));
+		return result;
 	}
+
 }

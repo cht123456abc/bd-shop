@@ -133,16 +133,16 @@
 	<select id="findGoodsPriceByPriceIdAndState" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_goods_price where price_id=#{0}
-		and state = #{1}
+		from t_goods_price where price_id=#{priceId}
+		and state = #{state}
 		order by update_time desc
 	</select>
 
 	<select id="findAllByGoodsIdAndNotState" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_goods_price where goods_id=#{0}
-		and state &lt;&gt; #{1}
+		from t_goods_price where goods_id=#{goodsId}
+		and state &lt;&gt; #{notState}
 		order by update_time desc
 	</select>
 

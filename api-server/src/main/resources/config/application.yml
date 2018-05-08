@@ -81,11 +81,13 @@ spring:
 #
 server:
 #  context-path: /webapp
-  port: 8443
-  ssl.key-store: classpath:keystore.p12
-  ssl.key-store-password: 123456
-  ssl.keyStoreType: PKCS12
-  ssl.keyAlias: tomcat
+# https的配置
+#  port: 8443
+#  ssl.key-store: classpath:keystore.p12
+#  ssl.key-store-password: 123456
+#  ssl.keyStoreType: PKCS12
+#  ssl.keyAlias: tomcat
+  port: 8080
 
 logging:
     pattern:

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bigdatan.b2c.dao.base.IBaseDao;
 import com.bigdatan.b2c.entity.goodsprice.GoodsPrice;
+import org.apache.ibatis.annotations.Param;
 
 /**
  *
@@ -16,12 +17,12 @@ public interface GoodsPriceMapper extends IBaseDao<GoodsPrice>{
 	 * @param State 记录状态
 	 * @return
 	 */
-	public GoodsPrice findGoodsPriceByPriceIdAndState(int priceId,Byte state);
+	public GoodsPrice findGoodsPriceByPriceIdAndState(@Param("priceId")int priceId,@Param("state")Byte state);
 	/**
 	 * 根据商品id，查询所有规格（去除不包含的状态）
 	 * @param goodsId 商品id
 	 * @param notState 不包含的状态
 	 * @return
 	 */
-	public List<GoodsPrice> findAllByGoodsIdAndNotState(int goodsId,Byte notState);
+	public List<GoodsPrice> findAllByGoodsIdAndNotState(@Param("goodsId") int goodsId, @Param("notState") Byte notState);
 }
